@@ -11,6 +11,22 @@ exports.findAll = async (req, res) => {
   }
 };
 
+exports.findById = async (req, res) => {
+  try {
+    const dragon = await Dragon.findByPk(req.params.id)
+    console.warn(dragon);
+    if (dragon) {
+      res.status(200).send(dragon)
+    } else {
+      res.status(400).send({message: "Dragão não encontrado."})
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || "Erro ao buscar o dragão."
+    });
+  }
+};
+
 exports.create = async (req, res) => {
   try {
     await Dragon.create({
